@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.discipleMapper">
+    <!--name, object, graduated_school, brother, comefrom, daily_report, aims;-->
+    
+    <resultMap id="disciples" type="cn.mogeek.domain.Disciple">
+        <id property="id" column="id" javaType="int"></id>
+        <result property="qq" column="qq" javaType="int"></result>
+        <result property="name" column="name" javaType="String"></result>
+        <result property="aims" column="aims" javaType="String"></result>
+        <result property="object" column="object" javaType="String"></result>
+        <result property="brother" column="brother" javaType="String"></result>
+        <result property="comefrom" column="comefrom" javaType="String"></result>
+        <result property="graduated_school" column="graduated_school" javaType="String"></result>
+        <result property="daily_report" column="daily_report" javaType="String"></result>
+    </resultMap>
+
+    <!-- 根据id查询得到一个disciple对象-->
+    <select id="getDisciple" parameterType="int" resultType="cn.mogeek.domain.Disciple">
+        select * from jnshu_copy1 where id = #{id}
+    </select>
+
+    <!--插入一个新的 disciple 对象-->
+    <insert id="insertDisciple" parameterType="cn.mogeek.domain.Disciple" useGeneratedKeys="true" keyProperty="id">
+        insert into jnshu_copy1 (qq, name, object, graduated_school, brother, comefrom, daily_report, aims)
+        values (#{qq},#{name},#{object},#{graduated_school},#{brother},#{comefrom},#{daily_report},#{aims})
+    </insert>
+
+    <delete id="deleteDisciple" parameterType="int" >
+        delete from jnshu_copy1 where id=#{id}
+    </delete>
+    
+    <select id="selectAllDisciples" resultType="cn.mogeek.domain.Disciple">
+        select * from jnshu_copy1
+    </select>
+
+    <update id="updateDisciple" parameterType="cn.mogeek.domain.Disciple">
+        update jnshu_copy1
+        <set>
+            <if test="qq != null"> qq = #{qq}, </if>
+            <if test="name != null"> name = #{name}, </if>
+            <if test="object != null"> object = #{object}, </if>
+            <if test="graduated_school != null"> graduated_school = #{graduated_school}, </if>
+            <if test="brother != null"> brother = #{brother}, </if>
+            <if test="comefrom != null"> comefrom = #{comefrom}, </if>
+            <if test="daily_report != null"> daily_report = #{daily_report}, </if>
+            <if test="aims != null"> aims = #{aims}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
